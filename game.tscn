@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://debn21s2o3ft2"]
+
+[ext_resource type="Script" uid="uid://c14hxe6aoav88" path="res://Script/game.gd" id="1_4jv7b"]
+[ext_resource type="PackedScene" uid="uid://bfxch3ecdt8gg" path="res://Scene/plane.tscn" id="2_w51g1"]
+[ext_resource type="Texture2D" uid="uid://lveqhjrapwts" path="res://assets/background/sky.png" id="3_03iqk"]
+[ext_resource type="PackedScene" uid="uid://c8pjj6humapn1" path="res://Scene/pipes.tscn" id="3_4jv7b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w51g1"]
+size = Vector2(540, 34)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_4jv7b")
+pipe_scene = ExtResource("3_4jv7b")
+
+[node name="Sky" type="Sprite2D" parent="."]
+position = Vector2(243.009, 427.566)
+rotation = 1.57219
+scale = Vector2(0.44864, 0.5)
+texture = ExtResource("3_03iqk")
+
+[node name="Plane" parent="." instance=ExtResource("2_w51g1")]
+position = Vector2(75, 91)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(243, 790)
+shape = SubResource("RectangleShape2D_w51g1")
+
+[node name="PipeHolder" type="Node" parent="."]
+
+[node name="spown up" type="Marker2D" parent="PipeHolder"]
+position = Vector2(652, 250)
+
+[node name="spown low" type="Marker2D" parent="PipeHolder"]
+position = Vector2(652, 600)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.2
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_spown_timer_timeout"]
